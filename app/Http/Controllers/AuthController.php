@@ -7,6 +7,7 @@ use App\Models\Pengguna;
 use App\Models\M_Anak;
 use Auth;
 use Hash;
+use DB;
 
 class AuthController extends Controller
 {
@@ -39,8 +40,8 @@ class AuthController extends Controller
             $request->session()->put('email',$user->email);
             $request->session()->put('role',$user->role);
 
-            return "success";
-            // return redirect()->route('dashboard')->withSuccess('You have successfully login');
+            // return "success";
+            return redirect()->route('dashboard')->withSuccess('You have successfully login');
         }
 
         return back()->withErrors([
@@ -60,6 +61,17 @@ class AuthController extends Controller
         ->withErrors([
             'email' => 'Please login to access the dashboard.',
         ])->onlyInput('email');
+    }
+
+    public function getDataAnak(Request $request)
+    {
+        $filterData = DB::table('anak')
+        ->join('pertumbuhan','anak.id', '=','pertumbuhan.id_anak')
+        ->select('pertumbuhan.*')
+        ->where('anak.id', $request->input('selectedOption'))
+        ->get();
+
+        return response()->json($filterData);
     }
 
     public function logout(Request $request)

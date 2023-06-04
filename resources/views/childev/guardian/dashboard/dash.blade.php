@@ -80,10 +80,10 @@
 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
     <div class="row md-12">
       <div class="col-md-10">
-        <select class="form-select" aria-label="Default select example" style="margin-top:3px; margin-bottom:3px">
+        <select class="form-select" aria-label="Default select example" style="margin-top:3px; margin-bottom:3px" id ="filterSelect">
           <option selected>--Pilih Data Anak--</option>
           @foreach($anak as $data_anak)
-          <option value="{{$data_anak->nama_anak}}">{{$data_anak->nama_anak}}</option>
+          <option value="{{$data_anak->id}}">{{$data_anak->nama_anak}}</option>
           @endforeach
         </select>
       </div>
@@ -114,40 +114,83 @@
               <div id="lineChart"></div>
 
               <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  new ApexCharts(document.querySelector("#lineChart"), {
-                    series: [{
-                      name: "berat",
-                      data: [5, 7, 8, 9, 10, 13, 14]
-                    },
-                    {
-                      name: "tinggi",
-                      data: [7, 8, 9, 12, 13, 15, 11]
-                    }],
-                    chart: {
-                      height: 350,
-                      type: 'line',
-                      zoom: {
-                        enabled: false
-                      }
-                    },
-                    dataLabels: {
-                      enabled: false
-                    },
-                    stroke: {
-                      curve: 'smooth'
-                    },
-                    grid: {
-                      row: {
-                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                        opacity: 0.5
+              document.addEventListener("DOMContentLoaded", () => {
+                  var chartOptions = {
+                      series: [],
+                      chart: {
+                          height: 350,
+                          type: 'line',
+                          zoom: {
+                              enabled: false
+                          }
                       },
-                    },
-                    xaxis: {
-                      categories: ['3 bulan', '6 bulan', '9 bulan', '12 bulan', '15 bulan', '18 bulan', '21 bulan', '24 bulan'],
-                    }
-                  }).render();
-                });
+                      dataLabels: {
+                          enabled: false
+                      },
+                      stroke: {
+                          curve: 'smooth'
+                      },
+                      grid: {
+                          row: {
+                              colors: ['#f3f3f3', 'transparent'],
+                              opacity: 0.5
+                          },
+                      },
+                      xaxis: {
+                          categories: []
+                      }
+                  };
+
+                  var chart = new ApexCharts(document.querySelector("#lineChart"), chartOptions);
+                  chart.render();
+
+                  $('#filterSelect').on('change', function () {
+                      var selectedOption = $(this).val();
+
+                      $.ajax({
+                          url: "{{ route('dashboard-filter') }}",
+                          type: "GET",
+                          data: { selectedOption: selectedOption },
+                          success: function (response) {
+                            console.log(response[0]);
+                            var arrBerat = [];
+                            var arrTinggi = [];
+                            response.forEach((data) => {
+                                    arrBerat.push(data.berat)
+                                    arrTinggi.push(data.tinggi)
+                                    });
+                              chartOptions.series =  [{
+                                  name: "berat",
+                                  data: arrBerat
+                              },
+                              {
+                                  name: "tinggi",
+                                  data: arrTinggi
+                              }],
+                              chartOptions.chart= {
+                              height: 350,
+                              type: 'line',
+                              zoom: {
+                                enabled: false
+                              }
+                              },
+                              chartOptions.stroke =  {
+                                curve: 'smooth'
+                              },
+                              chartOptions.grid = {
+                                row: {
+                                  colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                  opacity: 0.5
+                                },
+                              },
+                              chartOptions.xaxis = {
+                                categories: ['3 bulan', '6 bulan', '9 bulan', '12 bulan', '15 bulan', '18 bulan', '21 bulan', '24 bulan'],
+                              }
+                              chart.updateOptions(chartOptions);
+                          }
+                      });
+                  });
+              });
               </script>
               <!-- End Line Chart -->
 
@@ -163,7 +206,7 @@
             <div class="card-body pb-0">
               <h5 class="card-title">Perkembangan <span>| 5 hasil cek perkembangan terakhir</span></h5>
 
-              <table class="table table-borderless">
+              <table class="table table-borderless" id="dataTable">
                 <thead>
                   <tr>
                     <th scope="col">Usia Perkembangan</th>

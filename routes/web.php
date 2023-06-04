@@ -46,6 +46,8 @@ Route::post('/post_daftar', [DaftarController::class, 'daftar']);
 
 Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
+Route::get('/dashboard-filter',[AuthController::class, 'getDataAnak'])->name('dashboard-filter');
+
 
 
 /*---------------
