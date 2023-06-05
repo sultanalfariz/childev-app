@@ -89,7 +89,7 @@ Route::get('/pertumbuhan-filter',[PertumbuhanController::class, 'getDataAnak'])-
 
 Route::get('/pertumbuhan-data',[PertumbuhanController::class, 'getDataPertumbuhan'])->name('pertumbuhan-data');
 
-Route::get('/tambah_data_pertumbuhan',[PertumbuhanController::class, 'index']);
+Route::get('/tambah_data_pertumbuhan/{id}',[PertumbuhanController::class, 'index'])->name('tambah_data_pertumbuhan');
 
 /*---------------
     Perkembangan

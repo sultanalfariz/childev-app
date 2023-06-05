@@ -205,7 +205,7 @@
                               btnTambah.classList.remove("btn-success");
                               btnTambah.classList.add("btn-secondary");
                             }else {
-                              btnTambah.setAttribute("href","tambah_data_pertumbuhan");
+                              btnTambah.setAttribute("href","{{route('tambah_data_pertumbuhan', '')}}"+"/"+filter.value);
                               btnTambah.style.pointerEvents = "auto";
                               btnTambah.classList.remove("btn-secondary");
                               btnTambah.classList.add("btn-success");
