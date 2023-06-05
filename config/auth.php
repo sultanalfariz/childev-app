@@ -62,11 +62,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-<<<<<<< HEAD
-            'model' => App\Models\User::class,
-=======
             'model' => App\Models\Pengguna::class,
->>>>>>> 02dba0f (add login feature)
         ],
 
         // 'users' => [
