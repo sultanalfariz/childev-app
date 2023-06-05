@@ -139,25 +139,27 @@
               <h5 class="card-title">Data Anak</h5>
 
               <!-- General Form Elements -->
-              <form>
-                <div class="row mb-3">
+      
+              <form action="{{ route('add_anak_post') }}" method="post" class="row g-3 needs-validation" novalidate>
+                    @csrf
+                    <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Nama Lengkap</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control">
+                    <input type="text" name="name" class="form-control">
                   </div>
                 </div>
                 
                 <div class="row mb-3">
                   <label for="inputDate" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                   <div class="col-sm-10">
-                    <input type="date" class="form-control">
+                    <input type="date" name="date_birth" class="form-control">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" name="gender" aria-label="Default select example">
                       <option selected>--Pilih Jenis Kelamin--</option>
                       <option value="1">Laki-laki</option>
                       <option value="2">Perempuan</option>
@@ -171,9 +173,7 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                 </div>
-
-              </form><!-- End General Form Elements -->
-
+                  </form>
             </div>
           </div>
 

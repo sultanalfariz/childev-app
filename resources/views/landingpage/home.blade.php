@@ -12,7 +12,7 @@
         <a href="/">Beranda</a>
         <a href="#services">Tentang Kami</a>
         <a href="#about">Layanan Kami</a>        
-        <a href="/register">Daftar</a>
+        <a href="/daftar">Daftar</a>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </nav>
     <div id="menu-btn" class="fas fa-bars"></div>

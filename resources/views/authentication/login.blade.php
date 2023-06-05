@@ -9,7 +9,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
+           
               <div class="d-flex justify-content-center py-4">
                 <a href="/" class="logo d-flex align-items-center w-auto">
                   <img src="img/logo-childev.png" alt="">
@@ -26,8 +26,8 @@
                     <!-- <p class="text-center small">Masukkan email & password</p> -->
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
-
+                  <form action="{{ route('auth') }}" method="post" class="row g-3 needs-validation" novalidate>
+                    @csrf
                     <div class="col-12">
                       <label for="yourEmail" class="form-label">Email</label>
                       <div class="input-group has-validation">
@@ -49,7 +49,7 @@
                       </div>
                     </div> -->
                     <div class="col-12">
-                      <a href="\dashboard" class="btn btn-primary w-100" type="submit">Login</a>
+                      <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
                     <div class="col-12" style="text-align:center">
                       <p class="small mb-0">Belum punya akun? <a href="\register">Daftar sekarang!</a></p>
