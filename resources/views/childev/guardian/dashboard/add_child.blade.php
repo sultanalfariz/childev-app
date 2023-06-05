@@ -13,57 +13,8 @@
   <i class="bi bi-list toggle-sidebar-btn"></i>
 </div><!-- End Logo -->
 
-<nav class="header-nav ms-auto">
-  <ul class="d-flex align-items-center">
-    
-    <li class="nav-item dropdown pe-3">
-
-      <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-        <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
-        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-      </a><!-- End Profile Iamge Icon -->
-
-      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-        <li class="dropdown-header">
-          <h6>Kevin Anderson</h6>
-          <span>Web Designer</span>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-            <i class="bi bi-person"></i>
-            <span>Akun Saya</span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-            <i class="bi bi-gear"></i>
-            <span>Edit Akun</span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <i class="bi bi-box-arrow-right"></i>
-            <span>Keluar</span>
-          </a>
-        </li>
-
-      </ul><!-- End Profile Dropdown Items -->
-    </li><!-- End Profile Nav -->
-
-  </ul>
-</nav><!-- End Icons Navigation -->
+@component('components.header_dash')
+@endcomponent
 
 </header><!-- End Header -->
 
@@ -92,19 +43,19 @@
   </li><!-- End Perkembangan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\catatan_kesehatan">
       <i class="bi bi-journal-text"></i><span>Catatan Kesehatan Pribadi</span>
     </a>
   </li><!-- End Catatan Kesehatan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\rekam_medis">
       <i class="bi bi-journal-medical"></i><span>Rekam Medis</span>
     </a>
   </li><!-- End Rekam Medis Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\akun">
       <i class="bi bi-person"></i><span>Akun</span>
     </a>
   </li><!-- End Akun Nav -->
@@ -141,8 +92,11 @@
               <!-- General Form Elements -->
       
               <form action="{{ route('add_anak_post') }}" method="post" class="row g-3 needs-validation" novalidate>
-                    @csrf
-                    <div class="row mb-3">
+                    @csrf                    
+                  
+                  <input type="text" name="uid" class="form-control" value="{{session('uid')}}" hidden>
+
+                  <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Nama Lengkap</label>
                   <div class="col-sm-10">
                     <input type="text" name="name" class="form-control">
@@ -161,8 +115,19 @@
                   <div class="col-sm-10">
                     <select class="form-select" name="gender" aria-label="Default select example">
                       <option selected>--Pilih Jenis Kelamin--</option>
-                      <option value="1">Laki-laki</option>
-                      <option value="2">Perempuan</option>
+                      <option value="Laki-laki">Laki-laki</option>
+                      <option value="Perempuan">Perempuan</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Cara Lahir</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" name="cara_lahir" aria-label="Default select example">
+                      <option selected>--Pilih Cara Lahir--</option>
+                      <option value="Normal">Normal</option>
+                      <option value="Caesar">Caesar</option>
                     </select>
                   </div>
                 </div>

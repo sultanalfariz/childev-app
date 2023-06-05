@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class M_Anak extends Model
+class Pertumbuhan extends Model
 {
     use HasFactory;
 
-    protected $table = 'anak';
+    protected $table = 'pertumbuhan';
 
     protected $primaryKey = 'id';
 
     public $timestamps = false;
 
     protected $fillable = [
-        'nama_anak', 'uid', 'tanggal_lahir', 'jenis_kelamin', 'cara_lahir'
+        'id_anak', 'tinggi', 'berat', 'lingkar_kepala', 'usia'
     ];
 }

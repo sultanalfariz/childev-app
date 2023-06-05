@@ -68,7 +68,7 @@
                       <button class="btn btn-primary w-100" type="submit">Buat Akun</button>
                     </div>
                     <div class="col-12" style="text-align:center">
-                      <p class="small mb-0">Sudah punya akun? <a href="/login">Masuk disini!</a></p>
+                      <p class="small mb-0">Sudah punya akun? <a href="/masuk">Masuk disini!</a></p>
                     </div>
                   </form>
 

@@ -36,12 +36,22 @@ class AuthController extends Controller
             $user = Auth::user();
             $request->session()->regenerate();
             //aturlah apa aja
+            $request->session()->put('uid',$user->uid);
             $request->session()->put('name',$user->nama_lengkap);
             $request->session()->put('email',$user->email);
             $request->session()->put('role',$user->role);
+            $request->session()->put('foto_profil',$user->foto_profil);
 
+            if($user->role == "Guardian"){
+                return redirect()->route('dashboard')->withSuccess('You have successfully login');
+            } else if($user->role == "Admin"){
+                // return redirect()->route('dashboard_admin')->withSuccess('You have successfully login');
+                return view('childev.admin.dashboard.dash');
+            } else {
+                return view('childev.landingpage.home');
+            }
             // return "success";
-            return redirect()->route('dashboard')->withSuccess('You have successfully login');
+            // return redirect()->route('dashboard')->withSuccess('You have successfully login');
         }
 
         return back()->withErrors([
@@ -52,9 +62,21 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()) {
-            $anak = M_Anak::all();
+
+            $user = Auth::user();
+            $anak = M_Anak::where('uid', $user->uid)->get();
+
+            // if ($user->role == "Guardian"){
+            //     return view('childev.guardian.dashboard.dash', compact(['anak']));
+            // } else if($user->role == "Admin"){
+            //     return view('childev.admin.dashboard.dash');
+            // }
+            // else {
+            //     return view('childev.landingpage.home');
+            // }
 
             return view('childev.guardian.dashboard.dash', compact(['anak']));
+            
         }
 
         return redirect()->route('masuk')
@@ -70,6 +92,39 @@ class AuthController extends Controller
         ->select('pertumbuhan.*')
         ->where('anak.id', $request->input('selectedOption'))
         ->get();
+
+        return response()->json($filterData);
+    }
+
+    public function getDataPerkembangan(Request $request)
+    {
+        $filterData = DB::table('anak')
+        ->join('perkembangan','anak.id', '=','perkembangan.id_anak')
+        ->select('perkembangan.*')
+        ->where('anak.id', $request->input('selectedOption'))
+        ->get();
+
+        return response()->json($filterData);
+    }
+
+    public function getDataKesehatanUpdate(Request $request)
+    {
+        $filterData = DB::table('anak')
+        ->join('kesehatan','anak.id', '=','kesehatan.id_anak')
+        ->select('kesehatan.*')
+        ->where('anak.id', $request->input('selectedOption'))
+        ->orderBy('tanggal','desc')->limit(1)->get();
+
+        return response()->json($filterData);
+    }
+
+    public function getDataMedisUpdate(Request $request)
+    {
+        $filterData = DB::table('anak')
+        ->join('medis','anak.id', '=','medis.id_anak')
+        ->select('medis.*')
+        ->where('anak.id', $request->input('selectedOption'))
+        ->orderBy('tanggal','desc')->limit(1)->get();
 
         return response()->json($filterData);
     }

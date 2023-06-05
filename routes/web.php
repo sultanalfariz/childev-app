@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AnakController;
+use App\Http\Controllers\PertumbuhanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,11 +45,10 @@ Route::get('/daftar', function () {
 
 Route::post('/post_daftar', [DaftarController::class, 'daftar']);
 
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/dashboard-filter',[AuthController::class, 'getDataAnak'])->name('dashboard-filter');
-
-
+/*===================================================================================
+    GUARDIAN
+===================================================================================*/
 
 /*---------------
     Beranda
@@ -57,24 +57,39 @@ Route::get('/dashboard-filter',[AuthController::class, 'getDataAnak'])->name('da
 //     return view('childev.guardian.dashboard.dash');
 // });
 
-Route::get('/detail_anak', function () {
-    return view('childev.guardian.dashboard.child_detail');
-});
-
 Route::get('/tambah_data_anak',[AnakController::class, 'index']);
 
 Route::post('/add_anak_post',[AnakController::class, 'create'])->name('add_anak_post');
 
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
+Route::get('/dashboard-filter',[AuthController::class, 'getDataAnak'])->name('dashboard-filter');
+
+Route::get('/dashboard-perkembangan',[AuthController::class, 'getDataPerkembangan'])->name('dashboard-perkembangan');
+
+Route::get('/dashboard-kesehatan-update',[AuthController::class, 'getDataKesehatanUpdate'])->name('dashboard-kesehatan-update');
+
+Route::get('/dashboard-medis-update',[AuthController::class, 'getDataMedisUpdate'])->name('dashboard-medis-update');
+
+
 /*---------------
     Pertumbuhan
 ---------------*/
-Route::get('/pertumbuhan', function () {
-    return view('childev.guardian.pertumbuhan.main');
-});
+// Route::get('/pertumbuhan', function () {
+//     return view('childev.guardian.pertumbuhan.main');
+// });
 
-Route::get('/tambah_data_pertumbuhan', function () {
-    return view('childev.guardian.pertumbuhan.add_pertumbuhan');
-});
+// Route::get('/tambah_data_pertumbuhan', function () {
+//     return view('childev.guardian.pertumbuhan.add_pertumbuhan');
+// });
+
+Route::get('/pertumbuhan', [PertumbuhanController::class, 'pertumbuhan'])->name('pertumbuhan');
+
+Route::get('/pertumbuhan-filter',[PertumbuhanController::class, 'getDataAnak'])->name('pertumbuhan-filter');
+
+Route::get('/pertumbuhan-data',[PertumbuhanController::class, 'getDataPertumbuhan'])->name('pertumbuhan-data');
+
+Route::get('/tambah_data_pertumbuhan',[PertumbuhanController::class, 'index']);
 
 /*---------------
     Perkembangan
@@ -88,3 +103,45 @@ Route::get('/cek_perkembangan', function () {
 });
 
 
+/*---------------
+    Catatan Kesehatan
+---------------*/
+Route::get('/catatan_kesehatan', function () {
+    return view('childev.guardian.kesehatan.main');
+});
+
+Route::get('/tambah_catatan_kesehatan', function () {
+    return view('childev.guardian.kesehatan.add_catatan');
+});
+
+/*---------------
+    Rekam Medis
+---------------*/
+Route::get('/rekam_medis', function () {
+    return view('childev.guardian.medis.main');
+});
+
+/*---------------
+    Akun
+---------------*/
+Route::get('/akun', function () {
+    return view('childev.guardian.akun.main');
+});
+
+
+/*===================================================================================
+    ADMIN
+===================================================================================*/
+
+/*---------------
+    Beranda
+---------------*/
+// Route::get('/dashboard_admin', function () {
+//     return view('childev.admin.dashboard.dash');
+// });
+
+Route::get('/dashboard_admin', [AuthController::class, 'auth'])->name('dashboard_admin');
+
+Route::get('/buat_akun', function () {
+    return view('childev.admin.dashboard.add_user');
+});

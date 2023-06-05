@@ -17,9 +17,11 @@ class AnakController extends Controller
     public function create(Request $req)
     {
         $data = new M_Anak();
+        $data->uid = $req->uid;
         $data->nama_anak = $req->name;
         $data->tanggal_lahir = $req->date_birth;
         $data->jenis_kelamin = $req->gender;
+        $data->cara_lahir = $req->cara_lahir;
         $data->save();
 
         return redirect()->route('dashboard')->withSuccess('Successfully added');

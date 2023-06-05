@@ -21,7 +21,7 @@ class DaftarController extends Controller
         $data->alamat = $request->alamat ?? "Kosong";
         $data->jenis_kelamin = $request->jenis_kelamin ?? "Kosong";
         $data->no_hp = $request->no_hp ?? "Kosong";
-        $data->foto_profil = $request->foto_profil ?? "user.jpg";
+        $data->foto_profil = $request->foto_profil ?? "user.png";
         $data->role = "Guardian";
         $data->save();
 

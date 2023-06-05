@@ -25,7 +25,6 @@
   <link href="vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="vendor/simple-datatables/style.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="css/style.css" rel="stylesheet">
@@ -43,7 +42,8 @@
 <body>
 
   @yield('dashboard')
-  @yield('add_child')
+  @yield('add_user')
+  @yield('detail_user')
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

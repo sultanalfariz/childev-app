@@ -1,6 +1,6 @@
-@extends('childev.guardian.perkembangan.index')
+@extends('childev.guardian.medis.index')
 
-@section('kuisioner')
+@section('main')
 
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -37,7 +37,7 @@
   </li><!-- End Pertumbuhan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link" href="\perkembangan">
+    <a class="nav-link collapsed" href="\perkembangan">
       <i class="bi bi-bar-chart"></i><span>Perkembangan</span>
     </a>
   </li><!-- End Perkembangan Nav -->
@@ -49,7 +49,7 @@
   </li><!-- End Catatan Kesehatan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="\rekam_medis">
+    <a class="nav-link" href="\rekam_medis">
       <i class="bi bi-journal-medical"></i><span>Rekam Medis</span>
     </a>
   </li><!-- End Rekam Medis Nav -->
@@ -67,11 +67,11 @@
 <main id="main" class="main">
 
 <div class="pagetitle">
-  <h1>Perkembangan</h1>
+  <h1>Rekam Medis</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a href="\dashboard">Home</a></li>
-      <li class="breadcrumb-item active">Perkembangan</li>
+      <li class="breadcrumb-item active">Rekam Medis</li>
     </ol>
   </nav>
 </div><!-- End Page Title -->
@@ -104,41 +104,39 @@
           <div class="card top-selling overflow-auto">
 
             <div class="card-body pb-0">
-              <h5 class="card-title">Perkembangan <span>| 5 hasil cek perkembangan terakhir</span></h5>
+              <h5 class="card-title">Riwayat Medis<span></span></h5>
 
               <table class="table table-borderless">
                 <thead>
                   <tr>
-                    <th scope="col">Usia Perkembangan</th>
-                    <th scope="col">Hasil Cek Perkembangan</th>
-                    <th scope="col">Tanggal Cek Perkembangan</th>
+                    <th scope="col">Keluhan/Penyakit</th>
+                    <th scope="col">Obat/Tindakan</th>
+                    <th scope="col">Catatan Tambhaan</th>
+                    <th scope="col">Lampiran</th>
+                    <th scope="col">Waktu</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>24 bulan - 30 bulan</td>
-                    <td style="background: rgba(0, 128, 0, 0.381)">Normal</td>
-                    <td>05-05-2023</td>
-                  </tr>
-                  <tr>
-                    <td>18 bulan -24 bulan</td>
-                    <td style="background: rgba(255, 255, 0, 0.34)">Peringatan</td>
+                    <td>Diare</td>
+                    <td>Diberi Oralit</td>
+                    <td>-</td>
+                    <td>-</td>
                     <td>05-04-2023</td>
                   </tr>
                   <tr>
-                    <td>15 bulan - 18 bulan</td>
-                    <td style="background: rgba(255, 0, 0, 0.303)">Didiuga terlambat berkembang</td>
-                    <td>15-03-2023</td>
+                    <td>Diare</td>
+                    <td>Diberi Oralit</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>05-04-2023</td>
                   </tr>
                   <tr>
-                    <td>12 bulan - 15 bulan</td>
-                    <td style="background: rgba(0, 128, 0, 0.381)">Normal</td>
-                    <td>01-02-2023</td>
-                  </tr>
-                  <tr>
-                    <td>9 bulan -12 bulan</td>
-                    <td style="background: rgba(0, 128, 0, 0.381)">Normal</td>
-                    <td>15-01-2023</td>
+                    <td>Diare</td>
+                    <td>Diberi Oralit</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>05-04-2023</td>
                   </tr>
                 </tbody>
               </table>
@@ -149,9 +147,9 @@
         </div><!-- End Perkembangan -->
 
         <!-- Button -->
-        <div class="d-grid gap-2 mt-3">
-            <a href="\cek_perkembangan" class="btn btn-success" type="button">Cek Perkembangan Saat Ini</a>
-        </div>
+        <!-- <div class="d-grid gap-2 mt-3">
+            <a href="\tambah_catatan_kesehatan" class="btn btn-success" type="button">Tambah Catatan Kesehatan</a>
+        </div> -->
 
     </div><!-- End Left side columns -->
 

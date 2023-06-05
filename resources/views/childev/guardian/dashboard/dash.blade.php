@@ -43,19 +43,19 @@
   </li><!-- End Perkembangan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\catatan_kesehatan">
       <i class="bi bi-journal-text"></i><span>Catatan Kesehatan Pribadi</span>
     </a>
   </li><!-- End Catatan Kesehatan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\rekam_medis">
       <i class="bi bi-journal-medical"></i><span>Rekam Medis</span>
     </a>
   </li><!-- End Rekam Medis Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\akun">
       <i class="bi bi-person"></i><span>Akun</span>
     </a>
   </li><!-- End Akun Nav -->
@@ -80,7 +80,7 @@
 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
     <div class="row md-12">
       <div class="col-md-10">
-        <select class="form-select" aria-label="Default select example" style="margin-top:3px; margin-bottom:3px" id ="filterSelect">
+      <select class="form-select" aria-label="Default select example" style="margin-top:3px; margin-bottom:3px" id ="filterSelect">
           <option selected>--Pilih Data Anak--</option>
           @foreach($anak as $data_anak)
           <option value="{{$data_anak->id}}">{{$data_anak->nama_anak}}</option>
@@ -111,7 +111,7 @@
               <h5 class="card-title">Pertumbuhan</h5>
 
               <!-- Line Chart -->
-              <div id="lineChart"></div>
+              <div id="lineChart">
 
               <script>
               document.addEventListener("DOMContentLoaded", () => {
@@ -128,7 +128,7 @@
                           enabled: false
                       },
                       stroke: {
-                          curve: 'smooth'
+                          curve: 'straight'
                       },
                       grid: {
                           row: {
@@ -147,6 +147,84 @@
                   $('#filterSelect').on('change', function () {
                       var selectedOption = $(this).val();
 
+                      // Data Medis
+                      $.ajax({
+                          url: "{{ route('dashboard-medis-update') }}",
+                          type: "GET",
+                          data: { selectedOption: selectedOption },
+                          success: function (response) {
+                            console.log(response[0]);
+                            $('#mkeluhan').empty().append("belum ada data");
+                            $('#mpenanganan').empty().append("belum ada data");
+                            $('#mcatatan').empty().append("belum ada data");
+                            $('#mdokter').empty().append("belum ada data");
+                            $('#mwaktu').empty().append("belum ada data");
+                            
+                            $.each(response, function(index, item) {
+                                
+                                $('#mkeluhan').empty();
+                                $('#mpenanganan').empty();
+                                $('#mcatatan').empty();
+                                $('#mdokter').empty();
+                                $('#mwaktu').empty();
+                                
+                                $('#mkeluhan').append(item.keluhan);
+                                $('#mpenanganan').append(item.penanganan);
+                                $('#mcatatan').append(item.catatan);
+                                $('#mdokter').append(item.dokter);
+                                $('#mwaktu').append(item.tanggal);
+                            })
+                          }
+                      });
+
+                      // Data Kesehatan
+                      $.ajax({
+                          url: "{{ route('dashboard-kesehatan-update') }}",
+                          type: "GET",
+                          data: { selectedOption: selectedOption },
+                          success: function (response) {
+                            console.log(response[0]);
+                            $('#keluhan').empty().append("belum ada data");
+                            $('#penanganan').empty().append("belum ada data");
+                            $('#catatan').empty().append("belum ada data");
+                            $('#waktu').empty().append("belum ada data");
+                            
+                            $.each(response, function(index, item) {
+
+                                $('#keluhan').empty();
+                                $('#penanganan').empty();
+                                $('#catatan').empty();
+                                $('#waktu').empty();
+                                
+                                $('#keluhan').append(item.keluhan);
+                                $('#penanganan').append(item.penanganan);
+                                $('#catatan').append(item.catatan);
+                                $('#waktu').append(item.tanggal);
+                            })
+                          }
+                      });
+
+                      // Data Perkembangan
+                      $.ajax({
+                          url: "{{ route('dashboard-perkembangan') }}",
+                          type: "GET",
+                          data: { selectedOption: selectedOption },
+                          success: function (response) {
+                            console.log(response[0]);
+                            $('#tperkembangan tbody').empty();
+                            
+                            $.each(response, function(index, item) {
+
+                            		var row = $('<tr></tr>');
+                                row.append('<td>' + item.usia_perkembangan + '</td>');
+                                row.append('<td style="background: ' + item.color + '">' + item.hasil_cek + '</td>');
+                                row.append('<td>' + item.tanggal_cek + '</td>');
+                                
+                                $('#tperkembangan tbody').append(row);
+                            })
+                          }
+                      });
+
                       $.ajax({
                           url: "{{ route('dashboard-filter') }}",
                           type: "GET",
@@ -155,16 +233,18 @@
                             console.log(response[0]);
                             var arrBerat = [];
                             var arrTinggi = [];
+                            var arrUsia = [];
                             response.forEach((data) => {
                                     arrBerat.push(data.berat)
                                     arrTinggi.push(data.tinggi)
+                                    arrUsia.push(data.usia)
                                     });
                               chartOptions.series =  [{
-                                  name: "berat",
+                                  name: "Berat (Kg)",
                                   data: arrBerat
                               },
                               {
-                                  name: "tinggi",
+                                  name: "Tinggi (Cm)",
                                   data: arrTinggi
                               }],
                               chartOptions.chart= {
@@ -175,7 +255,7 @@
                               }
                               },
                               chartOptions.stroke =  {
-                                curve: 'smooth'
+                                curve: 'straight'
                               },
                               chartOptions.grid = {
                                 row: {
@@ -184,7 +264,7 @@
                                 },
                               },
                               chartOptions.xaxis = {
-                                categories: ['3 bulan', '6 bulan', '9 bulan', '12 bulan', '15 bulan', '18 bulan', '21 bulan', '24 bulan'],
+                                categories: arrUsia,
                               }
                               chart.updateOptions(chartOptions);
                           }
@@ -192,6 +272,44 @@
                   });
               });
               </script>
+
+                <!-- <script>
+                  document.addEventListener("DOMContentLoaded", () => {
+                    new ApexCharts(document.querySelector("#lineChart"), {
+                      series: [{
+                        name: "berat",
+                        data: [5, 7, 8, 9, 10, 13, 14]
+                      },
+                      {
+                        name: "tinggi",
+                        data: [7, 8, 9, 12, 13, 15, 11]
+                      }],
+                      chart: {
+                        height: 400,
+                        type: 'line',
+                        zoom: {
+                          enabled: false
+                        }
+                      },
+                      dataLabels: {
+                        enabled: false
+                      },
+                      stroke: {
+                        curve: 'smooth'
+                      },
+                      grid: {
+                        row: {
+                          colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                          opacity: 0.5
+                        },
+                      },
+                      xaxis: {
+                        categories: ['3 bulan', '6 bulan', '9 bulan', '12 bulan', '15 bulan', '18 bulan', '21 bulan', '24 bulan'],
+                      }
+                    }).render();
+                  });
+                </script> -->
+              </div>              
               <!-- End Line Chart -->
 
             </div>
@@ -206,7 +324,7 @@
             <div class="card-body pb-0">
               <h5 class="card-title">Perkembangan <span>| 5 hasil cek perkembangan terakhir</span></h5>
 
-              <table class="table table-borderless" id="dataTable">
+              <table id="tperkembangan" class="table table-borderless">
                 <thead>
                   <tr>
                     <th scope="col">Usia Perkembangan</th>
@@ -216,29 +334,9 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>24 bulan - 30 bulan</td>
-                    <td style="background: rgba(0, 128, 0, 0.381)">Normal</td>
-                    <td>05-05-2023</td>
-                  </tr>
-                  <tr>
-                    <td>18 bulan -24 bulan</td>
-                    <td style="background: rgba(255, 255, 0, 0.34)">Peringatan</td>
-                    <td>05-04-2023</td>
-                  </tr>
-                  <tr>
-                    <td>15 bulan - 18 bulan</td>
-                    <td style="background: rgba(255, 0, 0, 0.303)">Didiuga terlambat berkembang</td>
-                    <td>15-03-2023</td>
-                  </tr>
-                  <tr>
-                    <td>12 bulan - 15 bulan</td>
-                    <td style="background: rgba(0, 128, 0, 0.381)">Normal</td>
-                    <td>01-02-2023</td>
-                  </tr>
-                  <tr>
-                    <td>9 bulan -12 bulan</td>
-                    <td style="background: rgba(0, 128, 0, 0.381)">Normal</td>
-                    <td>15-01-2023</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                   </tr>
                 </tbody>
               </table>
@@ -258,35 +356,28 @@
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Keluhan atau Sakit</div>
-                    Demam dan diare
+                    <div id="keluhan">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Penanganan</div>
-                    Diberi oralit
+                    <div id="penanganan">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Catatan tambahan</div>
-                    -
-                  </div>
-                  <!-- <span class="badge bg-primary rounded-pill">14</span> -->
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Lampiran</div>
-                    05052023.jpg
+                    <div id="catatan">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Waktu</div>
-                    05/05/2023 18:02:38
+                    <div id="waktu">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
@@ -303,45 +394,38 @@
 
               <!-- List group with custom content -->
               <ol class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-start">
+              <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Keluhan atau Sakit</div>
-                    Demam dan diare
+                    <div id="mkeluhan">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
-                    <div class="fw-bold">Obat atau Penanganan</div>
-                    Diberi oralit
+                    <div class="fw-bold">Penanganan</div>
+                    <div id="mpenanganan">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Catatan tambahan</div>
-                    -
+                    <div id="mcatatan">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Dokter atau Bidan</div>
-                    Dr. Dwi Widyawati
-                  </div>
-                  <!-- <span class="badge bg-primary rounded-pill">14</span> -->
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-start">
-                  <div class="ms-2 me-auto">
-                    <div class="fw-bold">Lampiran</div>
-                    05072023.jpg
+                    <div id="mdokter">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-start">
                   <div class="ms-2 me-auto">
                     <div class="fw-bold">Waktu</div>
-                    05/05/2023 18:02:38
+                    <div id="mwaktu">belum ada data</div>
                   </div>
                   <!-- <span class="badge bg-primary rounded-pill">14</span> -->
                 </li>

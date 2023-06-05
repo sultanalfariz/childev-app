@@ -43,19 +43,19 @@
   </li><!-- End Perkembangan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\catatan_kesehatan">
       <i class="bi bi-journal-text"></i><span>Catatan Kesehatan Pribadi</span>
     </a>
   </li><!-- End Catatan Kesehatan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\rekam_medis">
       <i class="bi bi-journal-medical"></i><span>Rekam Medis</span>
     </a>
   </li><!-- End Rekam Medis Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\akun">
       <i class="bi bi-person"></i><span>Akun</span>
     </a>
   </li><!-- End Akun Nav -->
@@ -78,18 +78,16 @@
 
 <!-- Nama Anak -->
 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-    <!-- <i class="bi bi-person"></i>
-     Brandon Jacob (4 tahun 5 bulan) -->
-     <div class="row md-12">
-          <div class="col-md-12">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>--Pilih Data Anak--</option>
-              <option value="Brandon Jacob">Brandon Jacob</option>
-              <option value="Bridie Kessler">Bridie Kessler</option>
-              <option value="Raheem Lehner">Raheem Lehner</option>
-            </select>
-          </div>          
+    <div class="row md-12">
+      <div class="col-md-12">
+      <select class="form-select" aria-label="Default select example" style="margin-top:3px; margin-bottom:3px" id ="filterSelect">
+          <option selected>--Pilih Data Anak--</option>
+          @foreach($anak as $data_anak)
+          <option value="{{$data_anak->id}}">{{$data_anak->nama_anak}}</option>
+          @endforeach
+        </select>
       </div>
+    </div>
 </div> <!-- Nama Anak -->
 
 <section class="section dashboard">
@@ -109,7 +107,7 @@
 
                   <div class="d-flex align-items-center">                    
                     <div class="ps-3">
-                      <h6 style="color: #4154f1">80</h6>
+                      <h6 id="tinggi" style="color: #4154f1">-</h6>
                       <span class="text-muted small pt-2 ps-1">sentimeter</span>
 
                     </div>
@@ -126,7 +124,7 @@
                   <h5 class="card-title">Berat Badan</h5>
                   <div class="d-flex align-items-center">
                     <div class="ps-3">
-                      <h6 style="color: #2eca6a">5</h6>
+                      <h6 id="berat" style="color: #2eca6a">-</h6>
                       <span class="text-muted small pt-2 ps-1">Kilogram</span>
 
                     </div>
@@ -144,7 +142,7 @@
                   <h5 class="card-title">Lingkar Kepala</h5>
                   <div class="d-flex align-items-center">
                     <div class="ps-3">
-                      <h6 style="color: #ff771d">20</h6>
+                      <h6 id="lingkar" style="color: #ff771d">-</h6>
                       <span class="text-muted small pt-2 ps-1">sentimeter</span>
                     </div>
                   </div>
@@ -162,57 +160,157 @@
                   <h5 class="card-title">Berat Badan dan Tinggi Badan</h5>
 
                   <!-- Line Chart -->
-                  <div id="reportsChart"></div>
+                  <div id="lineChart">
 
                   <script>
                     document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Berat',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Tinggi',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
+                        var chartOptions = {
+                            series: [],
+                            chart: {
+                                height: 350,
+                                type: 'line',
+                                zoom: {
+                                    enabled: false
+                                }
+                            },
+                            dataLabels: {
+                                enabled: false
+                            },
+                            stroke: {
+                                curve: 'straight'
+                            },
+                            grid: {
+                                row: {
+                                    colors: ['#f3f3f3', 'transparent'],
+                                    opacity: 0.5
+                                },
+                            },
+                            xaxis: {
+                                categories: []
+                            }
+                        };
+
+                        var chart = new ApexCharts(document.querySelector("#lineChart"), chartOptions);
+                        chart.render();
+
+                        $('#filterSelect').on('change', function () {
+                            var selectedOption = $(this).val();
+
+                            // Data Pertumbuhan
+                            $.ajax({
+                                url: "{{ route('pertumbuhan-data') }}",
+                                type: "GET",
+                                data: { selectedOption: selectedOption },
+                                success: function (response) {
+                                  console.log(response[0]);
+                                  $('#tinggi').empty().append("-");
+                                  $('#berat').empty().append("-");
+                                  $('#lingkar').empty().append("-");
+                                  
+                                  $.each(response, function(index, item) {
+                                      
+                                      $('#tinggi').empty();
+                                      $('#berat').empty();
+                                      $('#lingkar').empty();
+                                      
+                                      $('#tinggi').append(item.tinggi);
+                                      $('#berat').append(item.berat);
+                                      $('#lingkar').append(item.lingkar_kepala);
+                                  })
+                                }
+                            });                            
+
+                            $.ajax({
+                                url: "{{ route('pertumbuhan-filter') }}",
+                                type: "GET",
+                                data: { selectedOption: selectedOption },
+                                success: function (response) {
+                                  console.log(response[0]);
+                                  var arrBerat = [];
+                                  var arrTinggi = [];
+                                  var arrLingkar = [];
+                                  var arrUsia = [];
+                                  response.forEach((data) => {
+                                          arrBerat.push(data.berat)
+                                          arrTinggi.push(data.tinggi)
+                                          arrLingkar.push(data.lingkar_kepala)
+                                          arrUsia.push(data.usia)
+                                          });
+                                    chartOptions.series =  [{
+                                        name: "Berat (Kg)",
+                                        data: arrBerat
+                                    },
+                                    {
+                                        name: "Tinggi (Cm)",
+                                        data: arrTinggi
+                                    },
+                                    {
+                                        name: "Lingkar Kepala (Cm)",
+                                        data: arrLingkar
+                                    }],
+                                    chartOptions.chart= {
+                                    height: 350,
+                                    type: 'line',
+                                    zoom: {
+                                      enabled: false
+                                    }
+                                    },
+                                    chartOptions.stroke =  {
+                                      curve: 'straight'
+                                    },
+                                    chartOptions.grid = {
+                                      row: {
+                                        colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                                        opacity: 0.5
+                                      },
+                                    },
+                                    chartOptions.xaxis = {
+                                      categories: arrUsia,
+                                    }
+                                    chart.updateOptions(chartOptions);
+                                }
+                            });
+                        });
                     });
                   </script>
+
+                    <!-- <script>
+                      document.addEventListener("DOMContentLoaded", () => {
+                        new ApexCharts(document.querySelector("#lineChart"), {
+                          series: [{
+                            name: "berat",
+                            data: [5, 7, 8, 9, 10, 13, 14]
+                          },
+                          {
+                            name: "tinggi",
+                            data: [7, 8, 9, 12, 13, 15, 11]
+                          }],
+                          chart: {
+                            height: 400,
+                            type: 'line',
+                            zoom: {
+                              enabled: false
+                            }
+                          },
+                          dataLabels: {
+                            enabled: false
+                          },
+                          stroke: {
+                            curve: 'smooth'
+                          },
+                          grid: {
+                            row: {
+                              colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
+                              opacity: 0.5
+                            },
+                          },
+                          xaxis: {
+                            categories: ['3 bulan', '6 bulan', '9 bulan', '12 bulan', '15 bulan', '18 bulan', '21 bulan', '24 bulan'],
+                          }
+                        }).render();
+                      });
+                    </script> -->
+                  </div>              
                   <!-- End Line Chart -->
 
                 </div>
