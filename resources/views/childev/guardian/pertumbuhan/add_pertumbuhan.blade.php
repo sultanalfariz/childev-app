@@ -7,7 +7,7 @@
 
 <div class="d-flex align-items-center justify-content-between">
   <a href="\dashboard" class="logo d-flex align-items-center">
-    <img src="img/logo-childev.png" alt="">
+    <img src="../img/logo-childev.png" alt="">
     <span class="d-none d-lg-block">Childev</span>
   </a>
   <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -80,7 +80,7 @@
 <!-- Nama Anak -->
 <div class="alert alert-secondary alert-dismissible fade show" role="alert">
     <i class="bi bi-person"></i>
-     Brandon Jacob (4 tahun 5 bulan)
+    {{$data->nama_anak}}
 </div> <!-- Nama Anak -->
 
 <section class="section dashboard">

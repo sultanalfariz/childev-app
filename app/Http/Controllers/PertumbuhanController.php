@@ -39,9 +39,10 @@ class PertumbuhanController extends Controller
         ])->onlyInput('email');
     }
 
-    public function index()
+    public function index($id)
     {
-        return view('childev.guardian.pertumbuhan.add_pertumbuhan');
+        $data = M_Anak::where('id',$id)->first();
+        return view('childev.guardian.pertumbuhan.add_pertumbuhan',compact(['data']));
     }
 
     public function addPertumbuhan(Request $req)
