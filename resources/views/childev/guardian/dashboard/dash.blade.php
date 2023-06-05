@@ -13,57 +13,8 @@
   <i class="bi bi-list toggle-sidebar-btn"></i>
 </div><!-- End Logo -->
 
-<nav class="header-nav ms-auto">
-  <ul class="d-flex align-items-center">
-    
-    <li class="nav-item dropdown pe-3">
-
-      <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-        <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
-        <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-      </a><!-- End Profile Iamge Icon -->
-
-      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-        <li class="dropdown-header">
-          <h6>Kevin Anderson</h6>
-          <span>Web Designer</span>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-            <i class="bi bi-person"></i>
-            <span>Akun Saya</span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-            <i class="bi bi-gear"></i>
-            <span>Edit Akun</span>
-          </a>
-        </li>
-        <li>
-          <hr class="dropdown-divider">
-        </li>
-
-        <li>
-          <a class="dropdown-item d-flex align-items-center" href="#">
-            <i class="bi bi-box-arrow-right"></i>
-            <span>Keluar</span>
-          </a>
-        </li>
-
-      </ul><!-- End Profile Dropdown Items -->
-    </li><!-- End Profile Nav -->
-
-  </ul>
-</nav><!-- End Icons Navigation -->
+@component('components.header_dash')
+@endcomponent
 
 </header><!-- End Header -->
 
@@ -131,9 +82,9 @@
       <div class="col-md-10">
         <select class="form-select" aria-label="Default select example" style="margin-top:3px; margin-bottom:3px">
           <option selected>--Pilih Data Anak--</option>
-          <option value="Brandon Jacob">Brandon Jacob</option>
-          <option value="Bridie Kessler">Bridie Kessler</option>
-          <option value="Raheem Lehner">Raheem Lehner</option>
+          @foreach($anak as $data_anak)
+          <option value="{{$data_anak->nama_anak}}">{{$data_anak->nama_anak}}</option>
+          @endforeach
         </select>
       </div>
       <div class="col-md-2">

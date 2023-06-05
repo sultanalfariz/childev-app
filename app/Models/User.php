@@ -8,7 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+<<<<<<< HEAD
 class User extends Authenticatable
+=======
+class User extends Model
+>>>>>>> 02dba0f (add login feature)
 {
     use HasApiTokens, HasFactory, Notifiable;
 

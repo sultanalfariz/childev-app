@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DaftarController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AnakController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,29 +32,36 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 ---------------*/
 Route::get('/masuk', function () {
     return view('authentication.login');
-});
+})->name('masuk');
+
+Route::post('/auth',[AuthController::class, 'auth'])->name('auth');
+
+Route::get('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::get('/daftar', function () {
     return view('authentication.register');
-});
+})->name('daftar');
 
 Route::post('/post_daftar', [DaftarController::class, 'daftar']);
+
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
 
 
 /*---------------
     Beranda
 ---------------*/
-Route::get('/dashboard', function () {
-    return view('childev.guardian.dashboard.dash');
-});
+// Route::get('/dashboard', function () {
+//     return view('childev.guardian.dashboard.dash');
+// });
 
 Route::get('/detail_anak', function () {
     return view('childev.guardian.dashboard.child_detail');
 });
 
-Route::get('/tambah_data_anak', function () {
-    return view('childev.guardian.dashboard.add_child');
-});
+Route::get('/tambah_data_anak',[AnakController::class, 'index']);
+
+Route::post('/add_anak_post',[AnakController::class, 'create'])->name('add_anak_post');
 
 /*---------------
     Pertumbuhan
@@ -75,3 +84,5 @@ Route::get('/perkembangan', function () {
 Route::get('/cek_perkembangan', function () {
     return view('childev.guardian.perkembangan.cek_perkembangan');
 });
+
+
