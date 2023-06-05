@@ -1,12 +1,12 @@
-@extends('childev.guardian.pertumbuhan.index')
+@extends('childev.admin.dashboard.index')
 
-@section('add_pertumbuhan')
+@section('add_user')
 
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
 <div class="d-flex align-items-center justify-content-between">
-  <a href="\dashboard" class="logo d-flex align-items-center">
+  <a href="\dashboard_admin" class="logo d-flex align-items-center">
     <img src="img/logo-childev.png" alt="">
     <span class="d-none d-lg-block">Childev</span>
   </a>
@@ -24,29 +24,11 @@
 <ul class="sidebar-nav" id="sidebar-nav">
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="\dashboard">
+    <a class="nav-link" href="\dashboard_admin">
       <i class="bi bi-grid"></i>
       <span>Beranda</span>
     </a>
   </li><!-- End Dashboard Nav -->
-
-  <li class="nav-item">
-    <a class="nav-link" href="\pertumbuhan">
-      <i class="bi bi-bar-chart-line"></i><span>Pertumbuhan</span>
-    </a>
-  </li><!-- End Pertumbuhan Nav -->
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="\perkembangan">
-      <i class="bi bi-bar-chart"></i><span>Perkembangan</span>
-    </a>
-  </li><!-- End Perkembangan Nav -->
-
-  <li class="nav-item">
-    <a class="nav-link collapsed" href="\catatan_kesehatan">
-      <i class="bi bi-journal-text"></i><span>Catatan Kesehatan Pribadi</span>
-    </a>
-  </li><!-- End Catatan Kesehatan Nav -->
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="\rekam_medis">
@@ -67,21 +49,15 @@
 <main id="main" class="main">
 
 <div class="pagetitle">
-  <h1>Tambah Data Pertumbuhan</h1>
+  <h1>Buat Akun</h1>
   <nav>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="\dashboard">Home</a></li>
-      <li class="breadcrumb-item">Pertumbuhan</li>
-      <li class="breadcrumb-item active">Tambah Data Pertumbuhan</li>
+      <li class="breadcrumb-item"><a href="\dashboard_admin">Home</a></li>
+      <li class="breadcrumb-item">Beranda</li>
+      <li class="breadcrumb-item active">Buat Akun</li>
     </ol>
   </nav>
 </div><!-- End Page Title -->
-
-<!-- Nama Anak -->
-<div class="alert alert-secondary alert-dismissible fade show" role="alert">
-    <i class="bi bi-person"></i>
-     Brandon Jacob (4 tahun 5 bulan)
-</div> <!-- Nama Anak -->
 
 <section class="section dashboard">
   <div class="row">
@@ -93,59 +69,54 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Data Pertumbuhan</h5>
+              <h5 class="card-title">Data Pengguna</h5>
 
               <!-- General Form Elements -->
-              <form>
-                <!-- <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Usia</label>
+      
+              <form action="{{ route('add_anak_post') }}" method="post" class="row g-3 needs-validation" novalidate>
+                    @csrf                    
+                  
+                  <input type="text" name="uid" class="form-control" value="{{session('uid')}}" hidden>
+
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Nama Lengkap</label>
                   <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>--Pilih Usia--</option>
-                      <option value="1">1 bulan</option>
-                      <option value="2">2 bulan</option>
-                      <option value="3">3 bulan</option>
+                    <input type="text" name="name" class="form-control">
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label class="col-sm-2 col-form-label">Role</label>
+                  <div class="col-sm-10">
+                    <select class="form-select" name="cara_lahir" aria-label="Default select example">
+                      <option selected>--Pilih Role--</option>
+                      <option value="Admin">Admin</option>
+                      <option value="Practitioner">Practitioner</option>
                     </select>
                   </div>
-                </div> -->
+                </div>
 
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Usia</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Password</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="ex: 3 bulan">
-                  </div>
-                </div>
-                
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Tinggi Badan</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control">
+                    <input type="text" name="name" class="form-control">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Berat Badan</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Konfirmasi Password</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Lingkar Kepala</label>
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control">
+                    <input type="text" name="name" class="form-control">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-10">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Buat Akun</button>
                   </div>
                 </div>
-
-              </form><!-- End General Form Elements -->
-
+                  </form>
             </div>
           </div>
 

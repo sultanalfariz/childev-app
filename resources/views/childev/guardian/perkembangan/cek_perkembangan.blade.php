@@ -43,19 +43,19 @@
   </li><!-- End Perkembangan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\catatan_kesehatan">
       <i class="bi bi-journal-text"></i><span>Catatan Kesehatan Pribadi</span>
     </a>
   </li><!-- End Catatan Kesehatan Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\rekam_medis">
       <i class="bi bi-journal-medical"></i><span>Rekam Medis</span>
     </a>
   </li><!-- End Rekam Medis Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="#">
+    <a class="nav-link collapsed" href="\akun">
       <i class="bi bi-person"></i><span>Akun</span>
     </a>
   </li><!-- End Akun Nav -->

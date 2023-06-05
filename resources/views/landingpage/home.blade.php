@@ -29,9 +29,11 @@
         <h3>Pantaulah Perkembangan Anak Anda Bersama Kami</h3>
         <p style="text-transform: none">Bergabunglah dengan kami agar Anda dapat memantau perkembangan dan pertumbuhan anak dengan lebih baik</p>
         <!-- @if (!auth()->user()) -->
+            <!-- <a href="/masuk" class="btn-login"> Masuk <span class="fas fa-chevron-right"></span> </a>
+            <a href="/daftar" class="btn-signup">Daftar<span class="fas fa-chevron-right"></span> </a> -->
+        <!-- @endif -->      
             <a href="/masuk" class="btn-login"> Masuk <span class="fas fa-chevron-right"></span> </a>
             <a href="/daftar" class="btn-signup">Daftar<span class="fas fa-chevron-right"></span> </a>
-        <!-- @endif -->
     </div>
 
     <div class="image">
@@ -85,14 +87,14 @@
         <div class="box">
             <i class="fas fa-hospital-user"></i>
             <h3>Pertumbuhan dan Perkembangan</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Childev menyediakan fitur pertumbuhan yang dapat membantu anda melihat grafik pertumbuhan anak dan fitur perkembangan yang dapat membantu anda menentukan kondisi perkembangan anak.</p>
             <!-- <a href="/physiotherapy" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a> -->
         </div>
 
         <div class="box">
             <i class="fas fa-book"></i>
             <h3>Catatan Kesehatan Pribadi</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Anda dapat mencatat riwayat sakit si kecil melalui fitur catatan kesehatan pribadi. Catatan ini dapat membantu tenaga medis dalam menentukan diagnosa.</p>
             <!-- <a href="/free-checkup" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a> -->
         </div>
 
@@ -100,7 +102,7 @@
             <i class="fas fa-book-medical"></i>
             <h3>Rekam Medis</h3>
             <h3></h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Anda dapat melihat catatan berkunjung anak ke puskesmas. Melalui fitur ini, anda dapat melihat kembali diagnosa tenaga medis mengenai kondisi anak.</p>
             <!-- <a href="/expert-doctor" class="btn"> learn more <span class="fas fa-chevron-right"></span> </a> -->
         </div>
 

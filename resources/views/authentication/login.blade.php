@@ -8,8 +8,16 @@
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-           
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">         
+
+              @if($errors->any())
+                @foreach ($errors->all() as $error)
+                  <div class="alert alert-danger">
+                    {{$error}}
+                  </div>
+                @endforeach        
+              @endif
+
               <div class="d-flex justify-content-center py-4">
                 <a href="/" class="logo d-flex align-items-center w-auto">
                   <img src="img/logo-childev.png" alt="">
@@ -52,9 +60,9 @@
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
                     <div class="col-12" style="text-align:center">
-                      <p class="small mb-0">Belum punya akun? <a href="\register">Daftar sekarang!</a></p>
+                      <p class="small mb-0">Belum punya akun? <a href="\daftar">Daftar sekarang!</a></p>
                       <!-- <p class="small mb-0">Dashboard? <a href="\dashboard">Next!</a></p> -->
-                    </div>
+                    </div>                                    
                   </form>
 
                 </div>

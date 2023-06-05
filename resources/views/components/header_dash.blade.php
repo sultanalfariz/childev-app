@@ -4,7 +4,7 @@
     <li class="nav-item dropdown pe-3">
 
       <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-        <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
+        <img src="img/{{session('foto_profil')}}" alt="Profile" class="rounded-circle">
           <span class="d-none d-md-block dropdown-toggle ps-2">
             {{session('name')}}
         </span>
@@ -20,7 +20,7 @@
         </li>
 
         <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+          <a class="dropdown-item d-flex align-items-center" href="\akun">
             <i class="bi bi-person"></i>
             <span>Akun Saya</span>
           </a>
@@ -30,7 +30,7 @@
         </li>
 
         <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+          <a class="dropdown-item d-flex align-items-center" href="\akun">
             <i class="bi bi-gear"></i>
             <span>Edit Akun</span>
           </a>
