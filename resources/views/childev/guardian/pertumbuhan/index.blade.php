@@ -59,6 +59,15 @@
 
   <!-- Template Main JS File -->
   <script src="js/main.js"></script>
+  <script>
+    const selectAnak = document.getElementById("filterSelect");
+    const btnTambah = document.getElementById("btn-pertumbuhan");
+    selectAnak.value = "--Pilih Data Anak--";
+    btnTambah.removeAttribute("href");
+    btnTambah.style.pointerEvents = "none";
+    btnTambah.classList.remove("btn-success");
+    btnTambah.classList.add("btn-secondary");
+  </script>
 
 </body>
 

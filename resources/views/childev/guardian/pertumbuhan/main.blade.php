@@ -2,6 +2,7 @@
 
 @section('main')
 
+
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -195,7 +196,20 @@
 
                         $('#filterSelect').on('change', function () {
                             var selectedOption = $(this).val();
-
+                            const btnTambah = document.getElementById("btn-pertumbuhan");
+                            const filter = document.getElementById("filterSelect");
+                            console.log("value",filter.value);
+                            if (filter.value === "--Pilih Data Anak--") {
+                              btnTambah.removeAttribute("href");
+                              btnTambah.style.pointerEvents = "none";
+                              btnTambah.classList.remove("btn-success");
+                              btnTambah.classList.add("btn-secondary");
+                            }else {
+                              btnTambah.setAttribute("href","tambah_data_pertumbuhan");
+                              btnTambah.style.pointerEvents = "auto";
+                              btnTambah.classList.remove("btn-secondary");
+                              btnTambah.classList.add("btn-success");
+                            }
                             // Data Pertumbuhan
                             $.ajax({
                                 url: "{{ route('pertumbuhan-data') }}",
@@ -270,46 +284,10 @@
                                     chart.updateOptions(chartOptions);
                                 }
                             });
+                            
                         });
                     });
                   </script>
-
-                    <!-- <script>
-                      document.addEventListener("DOMContentLoaded", () => {
-                        new ApexCharts(document.querySelector("#lineChart"), {
-                          series: [{
-                            name: "berat",
-                            data: [5, 7, 8, 9, 10, 13, 14]
-                          },
-                          {
-                            name: "tinggi",
-                            data: [7, 8, 9, 12, 13, 15, 11]
-                          }],
-                          chart: {
-                            height: 400,
-                            type: 'line',
-                            zoom: {
-                              enabled: false
-                            }
-                          },
-                          dataLabels: {
-                            enabled: false
-                          },
-                          stroke: {
-                            curve: 'smooth'
-                          },
-                          grid: {
-                            row: {
-                              colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                              opacity: 0.5
-                            },
-                          },
-                          xaxis: {
-                            categories: ['3 bulan', '6 bulan', '9 bulan', '12 bulan', '15 bulan', '18 bulan', '21 bulan', '24 bulan'],
-                          }
-                        }).render();
-                      });
-                    </script> -->
                   </div>              
                   <!-- End Line Chart -->
 
@@ -320,7 +298,7 @@
 
             <!-- Button -->
             <div class="d-grid gap-2 mt-3">
-                <a href="\tambah_data_pertumbuhan" class="btn btn-success" type="button">Tambah Data Pertumbuhan</a>
+                <a href="\tambah_data_pertumbuhan" class="btn btn-secondary" type="button" id="btn-pertumbuhan">Tambah Data Pertumbuhan</a>
             </div>
 
     </div><!-- End Left side columns -->
